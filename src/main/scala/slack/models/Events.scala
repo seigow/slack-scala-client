@@ -82,7 +82,8 @@ case class ReactionRemoved (
   reaction: String,
   item: JsValue, // TODO: Different item types -- https://api.slack.com/methods/stars.list
   event_ts: String,
-  user: String
+  user: String,
+  item_user: String
 ) extends SlackEvent
 
 case class UserTyping (
