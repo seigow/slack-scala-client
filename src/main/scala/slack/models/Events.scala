@@ -32,6 +32,14 @@ case class MessageChanged (
   channel: String
 ) extends SlackEvent
 
+case class BotMessage(
+  ts: String,
+  text: String,
+  bot_id: String,
+  username: String
+  // icons: JsValue
+) extends SlackEvent
+
 // TODO: Message Sub-types
 case class MessageWithSubtype (
  ts: String,
@@ -51,12 +59,12 @@ object MessageSubtypes {
   // Fallback for unhandled message sub-types
   case class UnhandledSubtype(subtype: String) extends MessageSubtype
 
-  case class BotMessage(
-    bot_id: String,
-    username: Option[String]
-  ) extends MessageSubtype {
-    val subtype = "bot_message"
-  }
+  // case class BotMessage(
+  //   bot_id: String,
+  //   username: Option[String]
+  // ) extends MessageSubtype {
+  //   val subtype = "bot_message"
+  // }
 
   case class MeMessage(subtype: String) extends MessageSubtype {
     //val subtype = "me_message"
