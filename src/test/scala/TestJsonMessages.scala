@@ -1,6 +1,6 @@
 import org.scalatest.FunSuite
 import play.api.libs.json.Json
-import slack.models.{MessageChanged, MessageSubtypes, SlackEvent, BotMessage}
+import slack.models.{MessageChanged, MessageSubtypes, SlackEvent}
 
 /**
  * Created by ptx on 9/5/15.
@@ -107,7 +107,7 @@ class TestJsonMessages extends FunSuite {
         |  "username":"Mr. Huzzah",
         |  "icons":"{}"
         |}""".stripMargin)
-    val ev = json.as[BotMessage]
+    val ev = json.as[MessageSubtypes.BotMessage]
   }
 
   test("me message parsed") {

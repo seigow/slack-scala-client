@@ -24,7 +24,7 @@ package object models {
   implicit val messageFmt = Json.format[Message]
   implicit val editMessageFmt = Json.format[EditMessage]
   implicit val messageChangedFmt = Json.format[MessageChanged]
-  implicit val botMessage = Json.format[BotMessage]
+  // implicit val botMessage = Json.format[BotMessage]
   implicit val reactionAddedFmt= Json.format[ReactionAdded]
   implicit val reactionRemovedFmt= Json.format[ReactionRemoved]
   implicit val userTypingFmt = Json.format[UserTyping]
@@ -84,7 +84,7 @@ package object models {
 
   // Message sub-types
   import MessageSubtypes._
-  // implicit val messageSubtypeBotMessageFmt = Json.format[BotMessage]
+  implicit val messageSubtypeBotMessageFmt = Json.format[BotMessage]
   implicit val messageSubtypeMeMessageFmt = Json.format[MeMessage]
   implicit val messageSubtypeChannelNameMessageFmt = Json.format[ChannelNameMessage]
   implicit val messageSubtypeHandledSubtypeFmt = Json.format[UnhandledSubtype]
@@ -93,7 +93,7 @@ package object models {
     (
       (JsPath \ "ts").write[String] and
         (JsPath \ "channel").write[String] and
-        (JsPath \ "user").write[String] and
+        (JsPath \ "user").write[Option[String]] and
         (JsPath \ "text").write[String] and
         (JsPath \ "is_starred").write[Option[Boolean]] and
         (JsPath \ "subtype").write[String]
@@ -178,7 +178,7 @@ package object models {
         case Some(subtype) =>
           import MessageSubtypes._
           val submessage = subtype match {
-            // case "bot_message" => jsValue.as[BotMessage]
+            case "bot_message" => jsValue.as[BotMessage]
             case "me_message" => jsValue.as[MeMessage]
             case "channel_name" => jsValue.as[ChannelNameMessage]
             case _ => jsValue.as[UnhandledSubtype]
@@ -187,7 +187,7 @@ package object models {
             MessageWithSubtype(
               (jsValue \ "ts").as[String],
               (jsValue \ "channel").as[String],
-              (jsValue \ "user").as[String],
+              (jsValue \ "user").asOpt[String],
               (jsValue \ "text").as[String],
               (jsValue \ "is_starred").asOpt[Boolean],
               submessage
@@ -206,7 +206,7 @@ package object models {
         etype.get match {
           case "hello" => JsSuccess(jsValue.as[Hello])
           case "message" if subtype.contains("message_changed") => JsSuccess(jsValue.as[MessageChanged])
-          case "message" if subtype.contains("bot_message") => JsSuccess(jsValue.as[BotMessage])
+          // case "message" if subtype.contains("bot_message") => JsSuccess(jsValue.as[BotMessage])
           case "message" if subtype.isDefined => JsSuccess(jsValue.as[MessageWithSubtype])
           case "message" => JsSuccess(jsValue.as[Message])
           case "user_typing" => JsSuccess(jsValue.as[UserTyping])
