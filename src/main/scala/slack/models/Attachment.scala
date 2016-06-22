@@ -12,7 +12,8 @@ case class Attachment (
   text: Option[String] = None,
   fields: Seq[AttachmentField] = Seq[AttachmentField](),
   image_url: Option[String] = None,
-  thumb_url: Option[String] = None
+  thumb_url: Option[String] = None,
+  callback_id: Option[String] = None
 )
 
 case class AttachmentField (
