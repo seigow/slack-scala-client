@@ -36,7 +36,7 @@ case class MessageChanged (
 case class MessageWithSubtype (
  ts: String,
  channel: String,
- user: String,
+ user: Option[String],
  text: String,
  is_starred: Option[Boolean],
  messageSubType: MessageSubtype
@@ -53,7 +53,8 @@ object MessageSubtypes {
 
   case class BotMessage(
     bot_id: String,
-    username: Option[String]
+    username: Option[String],
+    icons: Option[JsValue]
   ) extends MessageSubtype {
     val subtype = "bot_message"
   }

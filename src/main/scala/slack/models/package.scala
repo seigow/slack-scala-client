@@ -92,7 +92,7 @@ package object models {
     (
       (JsPath \ "ts").write[String] and
         (JsPath \ "channel").write[String] and
-        (JsPath \ "user").write[String] and
+        (JsPath \ "user").write[Option[String]] and
         (JsPath \ "text").write[String] and
         (JsPath \ "is_starred").write[Option[Boolean]] and
         (JsPath \ "subtype").write[String]
@@ -186,7 +186,7 @@ package object models {
             MessageWithSubtype(
               (jsValue \ "ts").as[String],
               (jsValue \ "channel").as[String],
-              (jsValue \ "user").as[String],
+              (jsValue \ "user").asOpt[String],
               (jsValue \ "text").as[String],
               (jsValue \ "is_starred").asOpt[Boolean],
               submessage
